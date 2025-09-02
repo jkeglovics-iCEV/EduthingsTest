@@ -75,44 +75,46 @@
     </ul>
 
   <!-- Start of sales force widget script -->
-  <script src="https://icevonline.lightning.force.com/lightning/lightning.out.js"></script>
   <script>
+  function toggleDropdown() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      function mountLightningComponent() {
-        $Lightning.use(
-          'c:LightningOutDependencyApp',
-          function () {
-            $Lightning.createComponent(
-              'c:flowWrapper',
-              {
-                districtURL: "10015548",
-                email:"josh.keglovics@icevonline.com",
-                lastName:"Keglovics",
-                firstName:"Josh"
-              }, 
-              'lightningout',
-              function (cmp) {
-                // callback when component is created and active on the page
-              }
-            );
-          },
-          "https://icevonline.my.site.com/HelpCenter"
-        );
-      }
-      // If $Lightning is already loaded, mount immediately; otherwise, wait for script load
-      if (window.$Lightning) {
+  document.addEventListener('DOMContentLoaded', function() {
+    function mountLightningComponent() {
+      $Lightning.use(
+        'c:LightningOutDependencyApp',
+        function () {
+          $Lightning.createComponent(
+            'c:flowWrapper',
+            {
+              districtURL: "10015548",
+              email:"josh.keglovics@icevonline.com",
+              lastName:"Keglovics",
+              firstName:"Josh"
+            }, 
+            'lightningout',
+            function (cmp) {
+              // callback when component is created and active on the page
+            }
+          );
+        },
+        "https://icevonline.my.site.com/HelpCenter"
+      );
+    }
+
+    if (window.$Lightning) {
+      mountLightningComponent();
+    } else {
+      var script = document.createElement('script');
+      script.src = 'https://icevonline.lightning.force.com/lightning/lightning.out.js';
+      script.onload = function() {
         mountLightningComponent();
-      } else {
-        var script = document.createElement('script');
-        script.src = 'https://icevonline.lightning.force.com/lightning/lightning.out.js';
-        script.onload = function() {
-          mountLightningComponent();
-        };
-        document.body.appendChild(script);
-      }
-    });
-  </script>
+      };
+      document.body.appendChild(script);
+    }
+  });
+</script>
 <!-- end of sales force widget script -->
   </body>
 </html>

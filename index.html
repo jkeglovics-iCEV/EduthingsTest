@@ -74,41 +74,45 @@
       </li>
     </ul>
 
-    <script src="https://icevonline--full.sandbox.lightning.force.com/lightning/lightning.out.js"></script>
-    <script>
-      function toggleDropdown() {
-        document.getElementById("myDropdown").classList.toggle("show");
+  <!-- Start of sales force widget script -->
+  <script src="https://icevonline.lightning.force.com/lightning/lightning.out.js"></script>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      function mountLightningComponent() {
+        $Lightning.use(
+          'c:LightningOutDependencyApp',
+          function () {
+            $Lightning.createComponent(
+              'c:flowWrapper',
+              {
+                districtURL: "10015548",
+                email:"josh.keglovics@icevonline.com",
+                lastName:"Keglovics",
+                firstName:"Josh"
+              }, 
+              'lightningout',
+              function (cmp) {
+                // callback when component is created and active on the page
+              }
+            );
+          },
+          "https://icevonline.my.site.com/HelpCenter"
+        );
       }
-
-      /*const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const userId = urlParams.get('userId')
-      console.log('Html page: ' + userId);*/
-
-      /*window.onclick = function(event) {
-        // If the clicked element is not inside the dropdown
-        const dropdown = document.querySelector('.dropdown');
-        if (!dropdown.contains(event.target)) {
-          document.getElementById("myDropdown").classList.remove("show");
-        }
-      }*/
-      
-      $Lightning.use(
-        'c:LightningOutDependencyApp', // name of the Lightning app
-        function () {
-          // Callback once framework and app loaded
-          $Lightning.createComponent(
-            'c:flowWrapper', // top-level component of your app
-            {},
-            //{userId: (userId)}, // attributes to set on the component when created, passed to the lwc as @api
-            'lightningout', // the DOM location to insert the component
-            function (cmp) {
-              // callback when component is created and active on the page
-            }
-          );
-        },
-        'https://icevonline--full.sandbox.my.site.com/eduthings' // Site endpoint
-      );
-    </script>
+      // If $Lightning is already loaded, mount immediately; otherwise, wait for script load
+      if (window.$Lightning) {
+        mountLightningComponent();
+      } else {
+        var script = document.createElement('script');
+        script.src = 'https://icevonline.lightning.force.com/lightning/lightning.out.js';
+        script.onload = function() {
+          mountLightningComponent();
+        };
+        document.body.appendChild(script);
+      }
+    });
+  </script>
+<!-- end of sales force widget script -->
   </body>
 </html>
